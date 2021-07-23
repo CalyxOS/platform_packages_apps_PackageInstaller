@@ -125,11 +125,11 @@ import java.util.concurrent.TimeUnit.SECONDS
 import java.util.concurrent.atomic.AtomicBoolean
 
 private const val LOG_TAG = "AutoRevokePermissions"
-private const val DEBUG_OVERRIDE_THRESHOLDS = false
+private const val DEBUG_OVERRIDE_THRESHOLDS = true
 // TODO eugenesusla: temporarily enabled for extra logs during dogfooding
 private const val DEBUG = true || DEBUG_OVERRIDE_THRESHOLDS
 
-private const val AUTO_REVOKE_ENABLED = true
+private const val AUTO_REVOKE_ENABLED = false
 
 private var SKIP_NEXT_RUN = false
 
@@ -212,12 +212,12 @@ class AutoRevokeOnBootReceiver : BroadcastReceiver() {
         if (userManager.isProfile) {
             if (DEBUG) {
                 DumpableLog.i(LOG_TAG, "user ${myUserHandle().identifier} is a profile. Not " +
-                    "running Auto Revoke.")
+                        "running Auto Revoke.")
             }
             return
         } else if (DEBUG) {
             DumpableLog.i(LOG_TAG, "user ${myUserHandle().identifier} is a profile owner. " +
-                "Running Auto Revoke.")
+                    "Running Auto Revoke.")
         }
 
         SKIP_NEXT_RUN = true
@@ -465,10 +465,10 @@ suspend fun isPackageAutoRevokePermanentlyExempt(
             .isNullOrEmpty()) {
         return true
     }
-    if (Utils.isUserDisabledOrWorkProfile(user)) {
+    if (Utils.isUserDisabled(user)) {
         if (DEBUG) {
             DumpableLog.i(LOG_TAG,
-                    "Exempted ${pkg.packageName} - $user is disabled or a work profile")
+                    "Exempted ${pkg.packageName} - $user is disabled")
         }
         return true
     }
