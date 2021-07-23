@@ -125,7 +125,7 @@ import java.util.concurrent.TimeUnit.SECONDS
 import java.util.concurrent.atomic.AtomicBoolean
 
 private const val LOG_TAG = "AutoRevokePermissions"
-private const val DEBUG_OVERRIDE_THRESHOLDS = false
+private const val DEBUG_OVERRIDE_THRESHOLDS = true
 // TODO eugenesusla: temporarily enabled for extra logs during dogfooding
 private const val DEBUG = true || DEBUG_OVERRIDE_THRESHOLDS
 
@@ -148,6 +148,7 @@ fun getUnusedThresholdMs(context: Context) = when {
 
 private val DEFAULT_CHECK_FREQUENCY_MS = DAYS.toMillis(15)
 private fun getCheckFrequencyMs(context: Context) = when {
+    DEBUG_OVERRIDE_THRESHOLDS -> SECONDS.toMillis(5)
     TeamfoodSettings.get(context) != null -> TeamfoodSettings.get(context)!!.checkFrequencyMs
     else -> DeviceConfig.getLong(
             DeviceConfig.NAMESPACE_PERMISSIONS,
@@ -205,17 +206,6 @@ class AutoRevokeOnBootReceiver : BroadcastReceiver() {
             DumpableLog.i(LOG_TAG, "scheduleAutoRevokePermissions " +
                 "with frequency ${getCheckFrequencyMs(context)}ms " +
                 "and threshold ${getUnusedThresholdMs(context)}ms")
-        }
-
-        val userManager = context.getSystemService(UserManager::class.java)!!
-        // If this user is a profile, then its auto revoke will be handled by the primary user
-        if (userManager.isProfile) {
-            if (DEBUG) {
-                DumpableLog.i(LOG_TAG, "user ${myUserHandle().identifier} is a profile. Not " +
-                    "running Auto Revoke.")
-            }
-            return
-        } else if (DEBUG) {
             DumpableLog.i(LOG_TAG, "user ${myUserHandle().identifier} is a profile owner. " +
                 "Running Auto Revoke.")
         }
@@ -465,10 +455,10 @@ suspend fun isPackageAutoRevokePermanentlyExempt(
             .isNullOrEmpty()) {
         return true
     }
-    if (Utils.isUserDisabledOrWorkProfile(user)) {
+    if (Utils.isUserDisabled(user)) {
         if (DEBUG) {
             DumpableLog.i(LOG_TAG,
-                    "Exempted ${pkg.packageName} - $user is disabled or a work profile")
+                    "Exempted ${pkg.packageName} - $user is disabled")
         }
         return true
     }
