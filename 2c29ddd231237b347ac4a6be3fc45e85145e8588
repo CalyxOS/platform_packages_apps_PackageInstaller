@@ -22,6 +22,30 @@
       },
       "revId": "2c29ddd231237b347ac4a6be3fc45e85145e8588",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0296f818_e2d65cce",
+        "filename": "src/com/android/permissioncontroller/permission/service/AutoRevokePermissions.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-07-23T14:35:17Z",
+      "side": 0,
+      "message": "That wouldn\u0027t cover apps only in the work profile though.",
+      "parentUuid": "8fe9bf86_645f6e4c",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 94
+      },
+      "revId": "2c29ddd231237b347ac4a6be3fc45e85145e8588",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
