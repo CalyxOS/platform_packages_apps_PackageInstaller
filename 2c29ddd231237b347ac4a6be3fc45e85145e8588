@@ -46,6 +46,30 @@
       },
       "revId": "2c29ddd231237b347ac4a6be3fc45e85145e8588",
       "serverId": "35266860-6252-469c-a67d-185064479fc0"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ecab341b_442f127c",
+        "filename": "src/com/android/permissioncontroller/permission/service/AutoRevokePermissions.kt",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2021-08-25T21:08:42Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "0296f818_e2d65cce",
+      "range": {
+        "startLine": 211,
+        "startChar": 8,
+        "endLine": 211,
+        "endChar": 94
+      },
+      "revId": "2c29ddd231237b347ac4a6be3fc45e85145e8588",
+      "serverId": "35266860-6252-469c-a67d-185064479fc0"
     }
   ]
 }
